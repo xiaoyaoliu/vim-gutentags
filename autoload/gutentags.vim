@@ -591,6 +591,10 @@ endfunction
 
 function! gutentags#default_stderr_cb(chan, msg) abort
     call gutentags#trace('[job stderr]: '.string(a:msg))
+    let l:submsgs = split(a:msg)
+    if 4 == len(l:submsgs) && l:submsgs[0] =~ "gtags" && l:submsgs[2] =~ "seem" && l:submsgs[3] =~ "corrupted"
+        execute delete(fnameescape(l:submsgs[1]))
+    endif 
 endfunction
 
 if has('nvim')
